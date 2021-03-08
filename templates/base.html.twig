@@ -21,7 +21,7 @@
                     <strong>Jeu</strong>
                 </a>
                 <span class="text-white">
-                {% if app.user is defined %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     Bonjour {{ app.user.fisrtName }}. <a href="{{ path('app_logout') }}">Me déconnecter</a>
                 {% else %}
                     <a href="{{ path('app_login') }}">Me connecter</a>
