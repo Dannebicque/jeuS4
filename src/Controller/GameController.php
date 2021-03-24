@@ -136,4 +136,11 @@ class GameController extends AbstractController
             'cards' => $tCards
         ]);
     }
+
+    /**
+     * @Route("/action-game/{game}", name="action_game")
+     */
+    public function actionGame(Game $game){
+        return $this->json('ok');
+    }
 }
