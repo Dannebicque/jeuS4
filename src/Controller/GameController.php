@@ -130,6 +130,23 @@ class GameController extends AbstractController
     }
 
     /**
+     * @Route("/get-tout-game/{game}", name="get_tour")
+     */
+    public function getTour(
+        Game $game
+    ): Response {
+        if ($this->getUser()->getId() === $game->getUser1()->getId() && $game->getQuiJoue() === 1) {
+            return $this->json(true);
+        }
+
+        if ($this->getUser()->getId() === $game->getUser2()->getId() && $game->getQuiJoue() === 2) {
+            return $this->json(true);
+        }
+
+        return $this->json( false);
+    }
+
+    /**
      * @param Game $game
      * @route("/refresh/{game}", name="refresh_plateau_game")
      */
