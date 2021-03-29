@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-8">
         Cartes de l'adversaire
-        {% for card in set.user2HandCards %}
+        {% for card in adversaire.handCards %}
             {# <img src="{{ asset('cartes/'~cards[card].picture) }}"> #}
             <span style="border: 1px solid black; margin:3px; padding:5px">
                 {{ cards[card].number }}
@@ -30,7 +30,7 @@
 </div>
 <div class="row">
     <div class="col-8">
-        {% for card in set.user1HandCards %}
+        {% for card in moi.handCards %}
             {# <img src="{{ asset('cartes/'~cards[card].picture) }}"> #}
             <span style="border: 1px solid black; margin:3px; padding:5px">
                 {{ cards[card].number }}

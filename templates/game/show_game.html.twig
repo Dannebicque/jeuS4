@@ -2,7 +2,7 @@
 
 {% block body %}
 <div id="plateau">
-{{ include('game/plateau_game.html.twig') }}
+{{ render(controller('App\\Controller\\GameController::refreshPlateauGame', {game:game.id})) }}
 </div>
 
 

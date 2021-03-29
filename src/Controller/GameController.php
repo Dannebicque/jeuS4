@@ -121,19 +121,11 @@ class GameController extends AbstractController
      * @Route("/show-game/{game}", name="show_game")
      */
     public function showGame(
-        CardRepository $cardRepository,
         Game $game
     ): Response {
-        $cards = $cardRepository->findAll();
-        $tCards = [];
-        foreach ($cards as $card) {
-            $tCards[$card->getId()] = $card;
-        }
 
         return $this->render('game/show_game.html.twig', [
-            'game' => $game,
-            'set' => $game->getRounds()[0],
-            'cards' => $tCards
+            'game' => $game
         ]);
     }
 
@@ -148,10 +140,31 @@ class GameController extends AbstractController
         foreach ($cards as $card) {
             $tCards[$card->getId()] = $card;
         }
+
+        if ($this->getUser()->getId() === $game->getUser1()->getId()) {
+            $moi['handCards'] = $game->getRounds()[0]->getUser1HandCards();
+            $moi['actions'] = $game->getRounds()[0]->getUser1Action();
+            $moi['board'] = $game->getRounds()[0]->getUser1BoardCards();
+            $adversaire['handCards'] = $game->getRounds()[0]->getUser2HandCards();
+            $adversaire['actions'] = $game->getRounds()[0]->getUser2Action();
+            $adversaire['board'] = $game->getRounds()[0]->getUser2BoardCards();
+        } elseif ($this->getUser()->getId() === $game->getUser2()->getId()) {
+            $moi['handCards'] = $game->getRounds()[0]->getUser2HandCards();
+            $moi['actions'] = $game->getRounds()[0]->getUser2Action();
+            $moi['board'] = $game->getRounds()[0]->getUser2BoardCards();
+            $adversaire['handCards'] = $game->getRounds()[0]->getUser1HandCards();
+            $adversaire['actions'] = $game->getRounds()[0]->getUser1Action();
+            $adversaire['board'] = $game->getRounds()[0]->getUser1BoardCards();
+        } else {
+            //redirection... je ne suis pas l'un des deux joueurs
+        }
+
         return $this->render('game/plateau_game.html.twig', [
             'game' => $game,
             'set' => $game->getRounds()[0],
-            'cards' => $tCards
+            'cards' => $tCards,
+            'moi' => $moi,
+            'adversaire' => $adversaire
         ]);
     }
 
